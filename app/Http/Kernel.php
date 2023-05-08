@@ -23,10 +23,12 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
-
-
-
+    
     /**
+     * 
+     * 
+     * 
+     * 
      * The application's route middleware groups.
      *
      * @var array<string, array<int, class-string|string>>
@@ -42,7 +44,10 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            //  \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+             // if enable  this line we  cann't login or register from react (errr 419  unknown status csrf token mismatch )
+
+            
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -66,5 +71,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }

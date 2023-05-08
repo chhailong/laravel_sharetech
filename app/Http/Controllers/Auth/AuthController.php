@@ -66,12 +66,24 @@ class AuthController extends Controller
         }
 
         if(Hash::check($request->password , $user->password)){
+           
+            // admin role = 1
+            if($user->role == 1){
+                $role = 'admin';
+            }
+            else {
+                $role = 'user';
+            }
+
             $access_token = $user->createToken('authToken')->plainTextToken ;
+
+
             return response([
                 'message' => 'login success',
                 'success' => true,
                 'user' => $user,
-                'access_token' => $access_token
+                'access_token' => $access_token,
+                'role' => $role,
 
             ]);
         }
