@@ -12,7 +12,7 @@ class LaptopController extends Controller
      */
     public function index()
     {
-        $laptop = Laptop::all();
+        $laptop = Laptop::get();
         return response()->json([
             'success' => true,
             'message' => 'laptops List',
@@ -34,17 +34,6 @@ class LaptopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'imageurl1' => 'required',
-            'cpu' => 'required',
-            'ram' => 'required',
-            'gpu' => 'required',
-            'storage' => 'required',
-            'display' => 'required',
-            'battery' => 'required',
-            'price' => 'required',
-            
-
 
         ]);
         return Laptop::create($request->all());
@@ -55,8 +44,13 @@ class LaptopController extends Controller
      */
     public function show(string $id)
     {
-        
-        return Laptop::find($id);
+        $laptop = Laptop::find($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'laptop List',
+            'data' => $laptop
+        ]);
+
     }
 
     /**
@@ -65,7 +59,6 @@ class LaptopController extends Controller
     public function edit(string $id)
     {
         //
-
 
     }
 
@@ -77,7 +70,11 @@ class LaptopController extends Controller
         
         $laptop = Laptop::find($id);
         $laptop->update($request->all());
-        return $laptop;
+        return response()->json([
+            'success' => true,
+            'message' => 'laptop updated',
+            'data' => $laptop
+        ]) ;
     }
 
     /**
@@ -85,6 +82,24 @@ class LaptopController extends Controller
      */
     public function destroy(string $id)
     {
-        return Laptop::destroy($id);
+        // return Laptop::destroy($id);
+
+        $delete = Laptop::destroy($id) ; 
+
+        return response([
+
+            'message'=> 'delete successfully', 
+            'status' => true ,
+            'data' => $delete 
+        ]);
     }
+
+
+    // Search item by specified name
+
+    // public function search($name)
+    // {
+    //     return Laptop::where('name' ,'like' ,'%'.$name.'%')->get() ;
+        
+    // }
 }

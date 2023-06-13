@@ -22,25 +22,14 @@ class AdminMiddleware
         // user role = 0
 
         if(Auth::check()){
-            if(Auth::user()->role == '1'){
+            if(Auth::user()->role === 1){
                 return $next($request);
             }
-            else {
-                return redirect('/admin')->with('message','You are not authorized to access admin page');
-            }
-
-
-            // return response([
-            //     'message' => 'You are not authorized to access this page',
-            //     'status' => false,
-            // ]);
-
 
         }
-
         else {
-            return redirect('/login')->with('message','login to access admin page');
+            return response('Not allow to access to admin page'); 
         }
-        return $next($request);
+
     }
 }

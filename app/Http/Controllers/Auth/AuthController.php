@@ -100,4 +100,11 @@ class AuthController extends Controller
 //        $user->currentAccessToken()->delete();
 //        return response('', 204);
     }
+
+
+    public function forgetPassword(Request $request)
+    {
+        
+        
+    }
 }

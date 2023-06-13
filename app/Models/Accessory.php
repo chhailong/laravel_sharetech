@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Laptop extends Model
+class Accessory extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'brand',
-    'os',
-    'cpu',
-    'ram',
-    'gpu',
-    'storage',
-    'screen_size',
-    'battery',
-    'refresh_rate',
-    'pro',
-    'con',
- 
+       
+        'brand',
+        'connectivity',
+        'special_feature',
     ];
+
+
 }
