@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
@@ -41,9 +42,9 @@ class AccessoryController extends Controller
 
         $accessories =new Accessory();
         // $accessories = Electronic::find($request->input('accessories_id'));
-        $accessories->brand = $request->input('brand'); 
-        $accessories->connectivity = $request->input('connectivity') ; 
-        $accessories->special_feature = $request->input('special_feature'); 
+        // $accessories->brand = $request->input('brand'); 
+        // $accessories->connectivity = $request->input('') ; 
+        // $accessories->special_feature = $request->input(''); 
         $accessories->save() ; 
 
         return response([
@@ -77,14 +78,14 @@ class AccessoryController extends Controller
     
     public function update(Request $request , Accessory $accessories)
     {
-        $accessories->brad = $request->get('brand');
-        $accessories->connectivity = $request->get('connectivity');
-        $accessories->special_feature = $request->get('special_feature');
-        $accessories->save();
-        return response([
-            'message' => 'update successfully'  , 
-            'accessories' => $accessories
-        ]);
+        // $accessories->brad = $request->get('brand');
+        // $accessories->connectivity = $request->get('connectivity');
+        // $accessories->special_feature = $request->get('special_feature');
+        // $accessories->save();
+        // return response([
+        //     'message' => 'update successfully'  , 
+        //     'accessories' => $accessories
+        // ]);
 
     }
 
@@ -93,8 +94,9 @@ class AccessoryController extends Controller
      */
 
     public function destroy(string $id)
+
     {
-        
+ 
         $accessories = Accessory::find($id);
         $accessories->delete();
         return response([

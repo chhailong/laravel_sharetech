@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Laptop;
+use App\Models\Electronic;
 
 class LaptopController extends Controller
 {
@@ -12,6 +14,7 @@ class LaptopController extends Controller
      */
     public function index()
     {
+        
         $laptop = Laptop::get();
         return response()->json([
             'success' => true,
@@ -34,7 +37,7 @@ class LaptopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
+            
         ]);
         return Laptop::create($request->all());
     }
@@ -94,12 +97,4 @@ class LaptopController extends Controller
         ]);
     }
 
-
-    // Search item by specified name
-
-    // public function search($name)
-    // {
-    //     return Laptop::where('name' ,'like' ,'%'.$name.'%')->get() ;
-        
-    // }
 }

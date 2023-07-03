@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('electronics', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('accessories_id'); 
+            $table->unsignedBigInteger('accessories_id')->nullable(); 
             $table->unsignedBigInteger('laptop_id'); 
             $table->unsignedBigInteger('electronic_type_id'); 
             $table->string('image1');
@@ -25,7 +25,6 @@ return new class extends Migration
             $table->double('price');
             $table->text('description')->nullable();
             $table->string('major');
-            $table->string('link_youtube')->nullable();
             $table->string('shop_name')->nullable();
             $table->timestamps();
         });

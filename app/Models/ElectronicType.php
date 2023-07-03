@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ElectronicType extends Model
+
 {
     
     use HasFactory;
-    protected $table = 'electronic_types' ;
-    protected $fillable =[
-        'type'
-        
+    protected $table = 'electronic_types';
+    protected $fillable = [
+        'categories'
+
     ];
 
 

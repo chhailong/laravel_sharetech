@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Laptop extends Model
 {
@@ -20,6 +22,14 @@ class Laptop extends Model
     'refresh_rate',
     'pro',
     'con',
- 
+
     ];
+
+    public function getElectronic():HasOne
+    {
+        return $this->hasOne(Electronic::class) ; 
+    }
+
+  
+    
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
 class AuthController extends Controller
 
 {
@@ -20,7 +19,7 @@ class AuthController extends Controller
             'c_password' => 'required|same:password'
 
         ]);
-
+        
         $user_exist = User::where('email',$request->email)->first();
         if($user_exist){
             return ([
@@ -36,7 +35,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
            
-
         ]);
 
         return response([
@@ -64,6 +62,7 @@ class AuthController extends Controller
                 'success' => false
             ]);
         }
+        
 
         if(Hash::check($request->password , $user->password)){
            
@@ -76,7 +75,6 @@ class AuthController extends Controller
             }
 
             $access_token = $user->createToken('authToken')->plainTextToken ;
-
 
             return response([
                 'message' => 'login success',
@@ -95,15 +93,36 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request){
-//        $user = $request->user();
-//        $user->currentAccessToken()->delete();
-//        return response('', 204);
-    }
 
+
+    public function logout(Request $request){
+       $user = $request->user();
+       $user->currentAccessToken()->delete();
+       return response([
+           'message' => 'logout success',
+           'success' => true,
+       ]);
+    }
 
     public function forgetPassword(Request $request)
     {
+        $request->validate([
+            'email' => 'required',
+        ]);
+        $user = User::where('email',$request->email)->first();
+        if(!$user){
+            return response ([
+                'message' => 'User Not found!',
+                'success' => false
+            ]);
+        }
+        
+        $user->sendEmailVerificationNotification();
+
+        return response([
+            'message' => 'Email sent successfully',
+            'success' => true,
+        ]);
         
         
     }

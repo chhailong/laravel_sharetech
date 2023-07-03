@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('electronic_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->string('categories');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -25,4 +26,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('electronic_types');
     }
+    
 };

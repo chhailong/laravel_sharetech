@@ -14,9 +14,9 @@ class Accessory extends Model
     protected $fillable = [
        
         'brand',
-        'connectivity',
-        'special_feature',
+        'spac_detail',
+        'pro',
+        'con'
+ 
     ];
-
-
 }

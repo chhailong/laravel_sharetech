@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('accessories', function (Blueprint $table) {
             $table->id();
-       
             $table->string('brand');
-            $table->string('connectivity')->nullable();
-            $table->string('special_feature')->nullable();
+            $table->string('spac_detail');
+            $table->string('pro')->nullable();
+            $table->string('con')->nullable();
             $table->timestamps();
         });
     }

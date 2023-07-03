@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\AccessoryController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\LaptopController ;
-use App\Http\Controllers\ElectronicController ;
-use App\Http\Controllers\FilterController;
+// use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\ElectronicController;
+use App\Http\Controllers\API\AccessoryController;
+use App\Http\Controllers\API\FilterController;
+use App\Http\Controllers\API\LaptopController;
+use App\Http\Controllers\API\RelatedController;
+use App\Models\Electronic ;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +24,11 @@ use App\Http\Controllers\FilterController;
 */
 
 // admin routes 
-Route::prefix('admin')->middleware('auth:sanctum' , 'isAdmin')->group(function(){
+Route::prefix('admin')->middleware('auth:sanctum' , 'isAdmin')->group(function() {
 
         // optimized routes
-        // Route::resource('laptops', LaptopController::class);
-
+        // Route::resource('electronics', ElectronicController::class);
+       
         // detailed routes
         // Route  for Electronics 
         Route::get('electronics',[ElectronicController::class,'index']);
@@ -32,32 +36,26 @@ Route::prefix('admin')->middleware('auth:sanctum' , 'isAdmin')->group(function()
         Route::get('electronics/{id}',[ElectronicController::class,'show']);
         Route::put('electronics/{id}',[ElectronicController::class,'update']);
         Route::delete('electronics/{id}',[ElectronicController::class,'destroy']);
-
-
-        //  Acessoeries Routes
-        // Route::get('accessories' ,[AccessoryController::class , 'index']);
-        Route::post('accessories' ,[AccessoryController::class , 'store']);
-        // Route for Laptops
-        // Route::get('laptops',[LaptopController::class,'index']);
-        // Route::post('laptops',[LaptopController::class,'store']);
-        // Route::get('laptops/{id}',[LaptopController::class,'show']);
-        // Route::put('laptops/{id}',[LaptopController::class,'update']);
-        // Route::delete('laptops/{id}',[LaptopController::class,'destroy']);
+        // Route  for laptops
+        Route::resource('laptops', LaptopController::class);
 });
 
-
 // public routes
+Route::get('electronics',[ElectronicController::class,'index']);
+Route::get('electronics/{id}',[ElectronicController::class,'show']);
+Route::get('laptops' , [LaptopController::class , 'index']) ; 
+Route::get('laptops' , [LaptopController::class , 'show']) ; 
 
-Route::get('/electronics',[ElectronicController::class,'index']);
-Route::get('/accessories' ,[AccessoryController::class , 'index']);
-Route::get('/electronics/{id}',[ElectronicController::class,'show']);
+
+// Auth routes
+Route::post('register', 'App\Http\Controllers\API\Auth\AuthController@register');
+Route::post('login', 'App\Http\Controllers\API\Auth\AuthController@login');
+
+// search electronic  routes
+Route::get('/electronics/search/{name}' ,[ElectronicController::class ,'search']) ; 
+
+Route::get('/electronics/filter' , [FilterController::class , 'index']);
+Route::get('/electronics/{id}/related',[RelatedController::class,'index']);
 
 
-
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::get('/laptops',[LaptopController::class,'index']);
-Route::get('/laptops/{id}',[LaptopController::class,'show']);
-Route::get('/laptops/search/{name}' ,[LaptopController::class ,'search']) ; 
-Route::get('/electronics/filter' , [FilterController::class  , 'index']);
 

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\Controller;
 use App\Models\Accessory;
 use Illuminate\Http\Request;
 use  App\Models\Electronic;
 use App\Models\ElectronicType;
 use App\Models\Laptop;
+
 
 class ElectronicController extends Controller
 {
@@ -17,13 +19,13 @@ class ElectronicController extends Controller
     {
         //
         $electronics = Electronic::get();
- 
         return  response()->json([
             'message'=> 'successfully get all electronics', 
             'success' => true,
             'data' => $electronics,
         ]
         );
+        dd($electronics);
         // return response()->json($electronics); 
     }
 
@@ -40,18 +42,17 @@ class ElectronicController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) 
+
     {
 
         $request->validate([
-            'laptop_id' => 'required',
-            'accessories_id' => 'required',
+
             'name' => 'required',
             'image1' => 'required',
             'image2' => 'required',
             'image3' => 'required',
             'price' => 'required',
             'major' => 'required', 
-
         ]);
         return Electronic::create($request->all()); 
     
@@ -60,24 +61,22 @@ class ElectronicController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(string $id)
     {
         
         $electronics = Electronic::find($id) ;
-        $accessories = Accessory::find($electronics->accessories_id);
+        // $accessories = Accessory::find($electronics->accessories_id);
+
         $laptops = Laptop::find($electronics->laptop_id);
 
-        // Server Error 500 need to  be fixed
-        //  one to many relationship query 
 
-        $electronicsType = $electronics->electronicType;
+        //  one to many relationship query 
+        $electronicsType = $electronics->electronicType ;
         $electronics->electronicType = $electronicsType ;
 
-        
-
-        
-        $electronics->accessories = $accessories ;
-        $electronics->laptops = $laptops ;
+        // $electronics->accessories = $accessories ;
+        $electronics->laptops = $laptops;
 
         $electronics = array($electronics);
         // dd($electronics);
@@ -100,7 +99,6 @@ class ElectronicController extends Controller
         //
 
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -113,9 +111,8 @@ class ElectronicController extends Controller
         return response()-> json([
             'message'=> 'successfully updated electronics',
             'success' => true,
-            'data' => $electronics,
+            'data' => $electronics ,
         ]);
-        
     }
 
     /**
@@ -131,11 +128,30 @@ class ElectronicController extends Controller
         return response()->json([
             'message' => 'successfully deleted electronics',
             'success' => true,
-            'data' => $electronics,
+            'data' => $electronics ,
         ] );
     }
-
     public function search($name){
-        return Electronic::where('name' , 'like' , '%'.$name.'%')->get() ; 
+
+        return Electronic::where('name' , 'like' , '%'.$name.'%')->get();
+
     }
+
+
+    public function relatedElectronic(Request $request)
+    {
+        $minPrice = $request->input('min_price', 0);
+        $maxPrice = $request->input('max_price', 999999);
+
+        $electronics = Electronic::where('price', '>=', $minPrice)
+            ->where('price', '<=', $maxPrice)
+            ->get();
+        return $electronics;
+    }
+
+ 
+        
+
 }
+
+

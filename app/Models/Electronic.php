@@ -26,28 +26,30 @@ class Electronic extends Model
         'price',
         'description',
         'major',
-        'link_youtube',
         'shop_name',
         
-
     ];
-
-
-
-    
 
     public function electronicType():BelongsTo
 
     {
-
         return $this->belongsTo(ElectronicType::class , 'electronic_type_id' , 'id') ; 
     }
 
-    // public function getAccessory():HasOne
+    // public function scopeRelatedProductsByPrice($query, $price , $id)
     // {
-    //     return $this->hasOne(Accessory::class );
+   
 
+    // // Get the products from each category that are within the price range
+    // $electronics = [];
+    // foreach ($electronics as $electronics) {
+    //     $electronics[] = $electronics->electronics()->where('price', '>=', $price)->where('price', '<=', $price + 100)->get();
+    // }
+    
+    // // Return the products
+    // return $electronics;
+    // dd($electronics);
     // }
 
-
+    
 }

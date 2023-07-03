@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
-
-
+namespace App\Http\Middleware ;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +14,6 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-
         // admin role = 1
         // user role = 0
 
@@ -30,6 +26,5 @@ class AdminMiddleware
         else {
             return response('Not allow to access to admin page'); 
         }
-
     }
 }
