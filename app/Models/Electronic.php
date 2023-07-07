@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\ElectronicType;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Electronic extends Model
 {
 
     use HasFactory ;
+    protected $guarded = ["id"] ;
     protected $table = 'electronics' ;
-    
     protected $fillable = [
-        
         'name',
-        'accessories_id',
-        'laptop_id',
         'electronic_type_id',
         'image1',
         'image2',
@@ -27,29 +25,20 @@ class Electronic extends Model
         'description',
         'major',
         'shop_name',
+
         
     ];
 
-    public function electronicType():BelongsTo
 
+    public function getCatagories():BelongsTo
     {
-        return $this->belongsTo(ElectronicType::class , 'electronic_type_id' , 'id') ; 
+        return $this->belongsTo(ElectronicType::class ,'electronic_type_id' , 'id' ) ; 
     }
 
-    // public function scopeRelatedProductsByPrice($query, $price , $id)
-    // {
-   
-
-    // // Get the products from each category that are within the price range
-    // $electronics = [];
-    // foreach ($electronics as $electronics) {
-    //     $electronics[] = $electronics->electronics()->where('price', '>=', $price)->where('price', '<=', $price + 100)->get();
-    // }
-    
-    // // Return the products
-    // return $electronics;
-    // dd($electronics);
-    // }
+    public function getLaptop():HasOne
+    {
+        return $this->hasOne(Laptop::class ,'electronic_id','id' ) ; 
+    }
 
     
 }

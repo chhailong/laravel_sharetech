@@ -37,6 +37,7 @@ class LaptopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'electronic_id' => 'required',
             
         ]);
         return Laptop::create($request->all());
@@ -48,6 +49,7 @@ class LaptopController extends Controller
     public function show(string $id)
     {
         $laptop = Laptop::find($id);
+        
         return response()->json([
             'success' => true,
             'message' => 'laptop List',

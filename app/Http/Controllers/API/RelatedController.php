@@ -12,16 +12,34 @@ class RelatedController extends Controller
     {
         $electronics = Electronic::findOrFail($request->id);
 
-        $relatedProducts = Electronic::where('price', '>=', $electronics->price - 100)
-            ->where('price', '<=', $electronics->price + 100)
-            ->limit(10)
+
+        $relatedProducts = Electronic::where('price', '>=', $electronics->price - 150)
+            ->where('price', '<=', $electronics->price + 150)
+            ->where('id', '!=', $electronics->id)
+            ->limit(3)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Related Products',
-            'data' => $relatedProducts
-        ]);
-    
+        if(!$relatedProducts) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No Related Products Found'
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => true,
+                'message' => 'Related Products',
+                'data' => $relatedProducts
+            ]);
+        }
+
+        // return response()->json([
+            
+        //     'success' => true,
+        //     'message' => 'Related Products',
+        //     'data' => $relatedProducts
+        // ]);
     }
+
+  
 }

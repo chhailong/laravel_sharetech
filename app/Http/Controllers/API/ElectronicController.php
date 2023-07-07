@@ -3,12 +3,14 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ElectronicResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Accessory;
 use Illuminate\Http\Request;
 use  App\Models\Electronic;
 use App\Models\ElectronicType;
 use App\Models\Laptop;
-
+use Ramsey\Uuid\Type\Integer;
 
 class ElectronicController extends Controller
 {
@@ -25,8 +27,7 @@ class ElectronicController extends Controller
             'data' => $electronics,
         ]
         );
-        dd($electronics);
-        // return response()->json($electronics); 
+    
     }
 
     /**
@@ -41,6 +42,8 @@ class ElectronicController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
     public function store(Request $request) 
 
     {
@@ -58,37 +61,41 @@ class ElectronicController extends Controller
     
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function show(string $id) {
 
-    public function show(string $id)
-    {
-        
-        $electronics = Electronic::find($id) ;
-        // $accessories = Accessory::find($electronics->accessories_id);
+        $electronic = Electronic::find($id) ;
 
-        $laptops = Laptop::find($electronics->laptop_id);
+         //Attempt to read property &quot;getLaptop&quot on null
 
+        $laptops = $electronic->getLaptop ;
+        $electronic->getLaptop = $laptops ;
 
-        //  one to many relationship query 
-        $electronicsType = $electronics->electronicType ;
-        $electronics->electronicType = $electronicsType ;
-
-        // $electronics->accessories = $accessories ;
-        $electronics->laptops = $laptops;
-
-        $electronics = array($electronics);
-        // dd($electronics);
+        $catagories =$electronic->getCatagories ; 
+        $electronic->getCatagories = $catagories  ;
         return response()->json([
-
-            'message' => 'successfully get electronics',
+            'message'=> 'successfully get  electronics by id' ,
             'success' => true,
-            'data' => $electronics,
+            'data' => $electronic,
+        ]);
 
-        ] ,200 );   
-
+ 
+    
     }
+
+    // public function getElectronicbyId( $id){
+    //     $electronic = Electronic::find($id) ; 
+    //     $laptop =$electronic->getLaptop ;
+    //     $electronic->getLaptop = $laptop ;
+
+    //     $electronicType =$electronic->getCatagories ;
+    //     $electronic->getCatagories = $electronicType ;
+    //     return response()->json([
+    //         'message'=> 'successfully get  electronics by id' ,
+    //         'success' => true,
+    //         'data' => $electronic,
+    //     ]);
+    // }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -104,8 +111,8 @@ class ElectronicController extends Controller
      */
 
     public function update(Request $request, string $id)
-    {
 
+    {
         $electronics = Electronic::find($id);
         $electronics->update($request->all());
         return response()-> json([
@@ -114,6 +121,7 @@ class ElectronicController extends Controller
             'data' => $electronics ,
         ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -131,26 +139,12 @@ class ElectronicController extends Controller
             'data' => $electronics ,
         ] );
     }
+
+    // search function 
     public function search($name){
-
         return Electronic::where('name' , 'like' , '%'.$name.'%')->get();
-
     }
 
-
-    public function relatedElectronic(Request $request)
-    {
-        $minPrice = $request->input('min_price', 0);
-        $maxPrice = $request->input('max_price', 999999);
-
-        $electronics = Electronic::where('price', '>=', $minPrice)
-            ->where('price', '<=', $maxPrice)
-            ->get();
-        return $electronics;
-    }
-
- 
-        
 
 }
 

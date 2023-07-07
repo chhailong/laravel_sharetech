@@ -104,6 +104,7 @@ class AuthController extends Controller
        ]);
     }
 
+    
     public function forgetPassword(Request $request)
     {
         $request->validate([
@@ -123,7 +124,6 @@ class AuthController extends Controller
             'message' => 'Email sent successfully',
             'success' => true,
         ]);
-        
-        
+         
     }
 }
