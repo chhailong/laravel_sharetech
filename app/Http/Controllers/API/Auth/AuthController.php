@@ -41,7 +41,7 @@ class AuthController extends Controller
 
             'message' => 'User created successfully',
             'status' => true,
-            'user' => $user,
+            'user' => $user ,
         ]);
 
     }

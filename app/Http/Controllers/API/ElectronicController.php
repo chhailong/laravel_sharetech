@@ -142,6 +142,7 @@ class ElectronicController extends Controller
 
     // search function 
     public function search($name){
+        
         return Electronic::where('name' , 'like' , '%'.$name.'%')->get();
     }
 
