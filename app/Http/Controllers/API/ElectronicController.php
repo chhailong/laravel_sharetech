@@ -45,9 +45,7 @@ class ElectronicController extends Controller
 
 
     public function store(Request $request) 
-
     {
-
         $request->validate([
 
             'name' => 'required',
@@ -62,11 +60,9 @@ class ElectronicController extends Controller
     }
 
     public function show(string $id) {
-
         $electronic = Electronic::find($id) ;
 
-         //Attempt to read property &quot;getLaptop&quot on null
-
+        //one to many relatonship 
         $laptops = $electronic->getLaptop ;
         $electronic->getLaptop = $laptops ;
 
