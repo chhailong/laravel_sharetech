@@ -62,7 +62,6 @@ Route::prefix('user')->middleware('auth:sanctum')->group(function(){
 }); 
 
 
-
 // public routes
 Route::get('electronics',[ElectronicController::class,'index']);
 Route::get('electronics/{id}',[ElectronicController::class,'show']);
