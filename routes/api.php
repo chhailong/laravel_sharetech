@@ -35,31 +35,18 @@ Route::prefix('admin')->middleware('auth:sanctum' , 'isAdmin')->group(function()
         // optimized routes
         Route::resource('electronics', ElectronicController::class);
        
-        // detailed routes
-        // Route  for Electronics 
-        // Route::get('electronics',[ElectronicController::class,'index']);
-        // Route::post('electronics',[ElectronicController::class,'store']);
-        // Route::get('electronics/{id}',[ElectronicController::class,'show']);
-        // Route::put('electronics/{id}',[ElectronicController::class,'update']);
-        // Route::delete('electronics/{id}',[ElectronicController::class,'destroy']);
-
-        
-        //route admin recommended electronics
-
         // Route  for laptops
-
         Route::resource('laptops', LaptopController::class);
 });
 
 //user route 
 Route::prefix('user')->middleware('auth:sanctum')->group(function(){
 
-        // Route::delete('electronics/{id}/favorite', [FavoriteController::class, 'destroy']);
-
         Route::get('/favorites',  [FavoriteController::class, 'index']);
         Route::post('/favorites/{electronic}',  [FavoriteController::class, 'store']);
-        Route::delete('/favorites/{id}',  [FavoriteController::class, 'destroy']);
-}); 
+        Route::delete('/favorites/{id}',  [FavoriteController::class, 'destroy']);    
+        
+});
 
 
 // public routes
